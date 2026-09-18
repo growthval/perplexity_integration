@@ -39,3 +39,7 @@ jobs:
         env:
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
         run: python scripts/smoke_test.py
+      - name: Smoke test against the real Perplexity Search API
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+        run: python scripts/search_smoke_test.py

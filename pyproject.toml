@@ -1,7 +1,7 @@
 [project]
-name = "perplexity-agent"
+name = "perplexity-integrations"
 version = "0.1.0"
-description = "Web-grounded answers via the Perplexity Agent API"
+description = "Web-grounded answers (Agent API) and programmatic web search (Search API) via Perplexity"
 requires-python = ">=3.10"
 dependencies = [
     "perplexityai>=0.43.5",
@@ -15,6 +15,7 @@ dev = [
 
 [project.scripts]
 perplexity-agent = "perplexity_agent.cli:main"
+perplexity-search = "perplexity_search.cli:main"
 
 [build-system]
 requires = ["setuptools>=68"]
