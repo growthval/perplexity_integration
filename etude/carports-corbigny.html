@@ -1,0 +1,440 @@
+<title>Carports bois en Nièvre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --ground:#F4F3EF; --surface:#FFFFFF; --surface-2:#EDECE6;
+  --ink:#191E1B; --ink-2:#4A544E; --muted:#6E7873; --rule:#DBD9D1;
+  --green:#0E9A63; --blue:#3B5BBF; --amber:#C06A10;
+  --pos:#0E7A52; --neg:#A4402E;
+  --shadow:0 1px 2px rgba(25,30,27,.06),0 8px 24px -12px rgba(25,30,27,.14);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#121513; --surface:#1A1F1C; --surface-2:#222825;
+    --ink:#E9ECE8; --ink-2:#B3BDB7; --muted:#8B958F; --rule:#2E3532;
+    --green:#26A874; --blue:#6E8FE0; --amber:#C57C30;
+    --pos:#3FB985; --neg:#D2735D;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121513; --surface:#1A1F1C; --surface-2:#222825;
+  --ink:#E9ECE8; --ink-2:#B3BDB7; --muted:#8B958F; --rule:#2E3532;
+  --green:#26A874; --blue:#6E8FE0; --amber:#C57C30;
+  --pos:#3FB985; --neg:#D2735D;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif; font-size:17px; line-height:1.6;
+  margin:0; padding-block:0 56px; padding-left:16px; padding-right:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:660px;margin:0 auto}
+
+h1,h2,h3,.lbl,.num,.tag{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
+h1{font-size:clamp(28px,7vw,40px);line-height:1.08;font-weight:700;letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance}
+h2{font-size:clamp(20px,4.6vw,25px);line-height:1.2;font-weight:600;letter-spacing:-.01em;margin:0 0 4px;text-wrap:balance}
+h3{font-size:16px;font-weight:600;letter-spacing:-.005em;margin:0 0 6px}
+p{margin:0 0 14px}
+a{color:inherit;text-underline-offset:2px;text-decoration-thickness:1px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:3px}
+strong{font-weight:600}
+
+.lbl{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+/* ---- en-tête ---- */
+header{padding-block:44px 30px;border-bottom:1px solid var(--rule)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px}
+.meta span{font-family:Archivo,sans-serif;font-size:12.5px;color:var(--muted)}
+.sub{font-size:19px;color:var(--ink-2);margin:0;text-wrap:balance}
+
+/* ---- verdict ---- */
+.verdict{
+  background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--green);
+  border-radius:4px;padding:22px 20px;margin:30px 0;box-shadow:var(--shadow);
+}
+.verdict .tag{
+  display:inline-block;font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--surface);background:var(--green);padding:4px 9px;border-radius:3px;margin-bottom:12px;
+}
+.verdict p:last-child{margin-bottom:0}
+.hero{font-family:Archivo,sans-serif;font-weight:700;font-size:clamp(38px,11vw,56px);line-height:1;letter-spacing:-.03em;color:var(--green);margin:6px 0 2px}
+.hero-sub{font-size:15px;color:var(--ink-2);margin:0 0 16px}
+
+section{padding-block:34px;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+.eyebrow{margin-bottom:14px}
+.note{font-size:14.5px;color:var(--muted);margin-bottom:0}
+
+/* ---- tuiles ---- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}
+.tile{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:14px}
+.tile .v{font-family:Archivo,sans-serif;font-weight:700;font-size:27px;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .k{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.35}
+.tile .d{font-family:"IBM Plex Mono",monospace;font-size:11.5px;margin-top:7px;font-variant-numeric:tabular-nums}
+.up{color:var(--pos)} .down{color:var(--neg)}
+
+/* ---- graphiques ---- */
+figure{margin:20px 0 0}
+figcaption{font-size:13.5px;color:var(--muted);margin-top:12px;line-height:1.45}
+
+.chart{display:flex;flex-direction:column;gap:15px}
+.crow .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:5px}
+.cname{font-family:Archivo,sans-serif;font-size:13.5px;line-height:1.3;color:var(--ink-2)}
+.cval{font-family:"IBM Plex Mono",monospace;font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.cpct{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.track{position:relative;height:22px;background:var(--surface-2);border-radius:4px}
+.track+.track{margin-top:4px}
+.fill{position:absolute;top:0;bottom:0;left:0;border-radius:4px;background:var(--green)}
+.fill.alt{background:var(--muted);opacity:.4}
+.fill.amber{background:var(--amber)}
+.fill.blue{background:var(--blue)}
+.scale{display:flex;justify-content:space-between;margin-top:8px;padding-top:7px;border-top:1px solid var(--rule)}
+.scale span{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.strong .cname{color:var(--ink);font-weight:600}
+.strong .cval{font-size:15px}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0 0}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-family:Archivo,sans-serif;font-size:12.5px;color:var(--ink-2)}
+.sw{width:11px;height:11px;border-radius:2px;flex:none}
+
+/* ---- listes ---- */
+.rows{display:flex;flex-direction:column;gap:0;margin:16px 0 0}
+.row{display:flex;gap:12px;padding:13px 0;border-top:1px solid var(--rule);align-items:baseline}
+.row:last-child{border-bottom:1px solid var(--rule)}
+.row .r-k{flex:1;min-width:0}
+.row .r-v{font-family:"IBM Plex Mono",monospace;font-size:14px;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;color:var(--ink)}
+.r-note{display:block;font-size:13.5px;color:var(--muted);line-height:1.4;margin-top:2px}
+
+ul.plain{list-style:none;padding:0;margin:14px 0 0}
+ul.plain li{padding-left:20px;position:relative;margin-bottom:11px;line-height:1.5}
+ul.plain li::before{content:"";position:absolute;left:4px;top:11px;width:5px;height:5px;border-radius:50%;background:var(--muted)}
+ul.plain li.p::before{background:var(--pos)}
+ul.plain li.n::before{background:var(--neg)}
+
+ol.q{counter-reset:q;list-style:none;padding:0;margin:16px 0 0}
+ol.q li{counter-increment:q;padding:12px 0 12px 38px;position:relative;border-top:1px solid var(--rule);line-height:1.45}
+ol.q li:last-child{border-bottom:1px solid var(--rule)}
+ol.q li::before{
+  content:counter(q,decimal-leading-zero);position:absolute;left:0;top:13px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--green);font-weight:500;
+}
+ol.q .why{display:block;font-size:13.5px;color:var(--muted);margin-top:3px}
+
+.callout{background:var(--surface-2);border-radius:4px;padding:15px 16px;margin:18px 0 0;font-size:15.5px;line-height:1.5}
+.callout strong{color:var(--ink)}
+
+details{margin-top:14px;border-top:1px solid var(--rule);padding-top:12px}
+summary{cursor:pointer;font-family:Archivo,sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-2);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+ ";color:var(--green);font-family:"IBM Plex Mono",monospace}
+details[open] summary::before{content:"– "}
+details .body{font-size:14px;color:var(--ink-2);margin-top:10px;line-height:1.55}
+details .body a{color:var(--ink-2)}
+
+footer{padding-block:30px 0;font-size:13.5px;color:var(--muted);line-height:1.5}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="lbl" style="margin:0 0 12px">Étude de marché · Nièvre</p>
+  <h1>Des carports bois autour de Corbigny&nbsp;: y a-t-il un marché&nbsp;?</h1>
+  <p class="sub">Artisan seul, activité en complément de revenu, objectif de cinq réalisations par an.</p>
+  <div class="meta">
+    <span>18 septembre 2026</span>
+    <span>Zone&nbsp;: 45&nbsp;min autour de Corbigny</span>
+    <span>Carports · auvents · abris agricoles</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <span class="tag">Verdict — Favorable</span>
+  <p style="margin:0 0 2px;font-size:15.5px;color:var(--ink-2)">Cinq ventes par an représentent</p>
+  <p class="hero">0,031&nbsp;%</p>
+  <p class="hero-sub">du vivier de foyers cibles de la zone. Soit <strong>un foyer sur 3&nbsp;249</strong> à convaincre en un an.</p>
+  <p style="margin:0">Le marché n'est pas grand et le territoire se dépeuple. Mais l'objectif est si bas au regard du vivier que la question n'est pas «&nbsp;y a-t-il assez de clients&nbsp;» — il y en a largement. La vraie question est <strong>à quel prix</strong>, face à un carport en kit vendu 229&nbsp;€ en grande surface.</p>
+</div>
+
+<section>
+  <p class="lbl eyebrow">01 — Le vivier</p>
+  <h2>16&nbsp;246 foyers cibles</h2>
+  <p>Des propriétaires de maison individuelle possédant au moins une voiture. C'est la cible naturelle&nbsp;: un locataire n'investit pas dans une structure qu'il laissera derrière lui.</p>
+
+  <figure>
+    <div class="chart" role="img" aria-label="Entonnoir : 35 506 logements dans la zone, dont 27 837 maisons individuelles, dont 18 957 occupées par leur propriétaire, dont 16 246 avec au moins une voiture.">
+      <div class="crow">
+        <div class="top"><span class="cname">Logements de la zone</span><span class="cval">35 506</span></div>
+        <div class="track"><div class="fill" style="width:100%;opacity:.24"></div></div>
+      </div>
+      <div class="crow">
+        <div class="top"><span class="cname">Maisons individuelles <span class="cpct">78,4 %</span></span><span class="cval">27 837</span></div>
+        <div class="track"><div class="fill" style="width:78.4%;opacity:.42"></div></div>
+      </div>
+      <div class="crow">
+        <div class="top"><span class="cname">Occupées par leur propriétaire <span class="cpct">68,1 %</span></span><span class="cval">18 957</span></div>
+        <div class="track"><div class="fill" style="width:53.4%;opacity:.64"></div></div>
+      </div>
+      <div class="crow strong">
+        <div class="top"><span class="cname">Avec au moins une voiture <span class="cpct">85,7 %</span></span><span class="cval">16 246</span></div>
+        <div class="track"><div class="fill" style="width:45.8%"></div></div>
+      </div>
+    </div>
+    <figcaption>Les barres donnent la part du total&nbsp;; le pourcentage à côté de chaque libellé est le taux de passage depuis l'étape précédente. Taux INSEE départementaux (RP 2022-2023) appliqués à une zone estimée à 50&nbsp;000 habitants, soit un quart de la Nièvre.</figcaption>
+  </figure>
+
+  <div class="tiles">
+    <div class="tile"><div class="v">6&nbsp;076</div><div class="k">foyers cibles avec deux voitures ou plus</div><div class="d">37,4 % · cible carport double</div></div>
+    <div class="tile"><div class="v">5&nbsp;326</div><div class="k">résidences secondaires dans la zone</div><div class="d">15,0 % des logements</div></div>
+  </div>
+  <p class="note">Les résidences secondaires forment une seconde cible, distincte&nbsp;: propriétaires par définition, souvent citadins, avec un budget travaux et peu de temps pour monter un kit eux-mêmes.</p>
+</section>
+
+<section>
+  <p class="lbl eyebrow">02 — Le terrain</p>
+  <h2>Trois fondamentaux au-dessus de la moyenne</h2>
+  <p>La Nièvre est structurellement plus favorable que la France sur tout ce qui compte pour ce métier.</p>
+
+  <figure>
+    <div class="chart" role="img" aria-label="Nièvre contre France : propriétaires 68,1 contre 57,5 pour cent ; ménages motorisés 85,7 contre 81,2 pour cent ; résidences secondaires 15,0 contre 9,7 pour cent.">
+      <div class="crow">
+        <div class="top"><span class="cname">Propriétaires de leur logement</span><span class="cval">+10,6 pts</span></div>
+        <div class="track"><div class="fill" style="width:68.1%"></div></div>
+        <div class="track"><div class="fill alt" style="width:57.5%"></div></div>
+        <div class="top" style="margin:5px 0 0"><span class="cpct">Nièvre 68,1 %</span><span class="cpct">France 57,5 %</span></div>
+      </div>
+      <div class="crow">
+        <div class="top"><span class="cname">Ménages avec au moins une voiture</span><span class="cval">+4,5 pts</span></div>
+        <div class="track"><div class="fill" style="width:85.7%"></div></div>
+        <div class="track"><div class="fill alt" style="width:81.2%"></div></div>
+        <div class="top" style="margin:5px 0 0"><span class="cpct">Nièvre 85,7 %</span><span class="cpct">France 81,2 %</span></div>
+      </div>
+      <div class="crow">
+        <div class="top"><span class="cname">Résidences secondaires</span><span class="cval">+5,3 pts</span></div>
+        <div class="track"><div class="fill" style="width:15%"></div></div>
+        <div class="track"><div class="fill alt" style="width:9.7%"></div></div>
+        <div class="top" style="margin:5px 0 0"><span class="cpct">Nièvre 15,0 %</span><span class="cpct">France 9,7 %</span></div>
+      </div>
+      <div class="scale"><span>0 %</span><span>25</span><span>50</span><span>75</span><span>100 %</span></div>
+    </div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--green)"></i>Nièvre</span>
+      <span><i class="sw" style="background:var(--muted);opacity:.42"></i>France</span>
+    </div>
+    <figcaption>INSEE, recensements 2022 et 2023. Le taux de motorisation national est daté de 2022, le taux départemental de 2023.</figcaption>
+  </figure>
+
+  <div class="tiles">
+    <div class="tile"><div class="v">78,4&nbsp;%</div><div class="k">des logements de la Nièvre sont des maisons individuelles</div><div class="d">111 206 maisons</div></div>
+    <div class="tile"><div class="v">132&nbsp;832</div><div class="k">voitures particulières immatriculées dans la Nièvre</div><div class="d">SDES, 1ᵉʳ janvier 2026</div></div>
+  </div>
+  <p class="note">Un carport ne se vend qu'à qui possède une maison, une voiture et le droit de bâtir dessus. Ces trois conditions sont réunies plus souvent ici qu'ailleurs en France.</p>
+</section>
+
+<section>
+  <p class="lbl eyebrow">03 — Les vents contraires</p>
+  <h2>Un territoire qui se vide</h2>
+  <p>Trois signaux jouent contre le projet. Aucun n'est rédhibitoire à cinq ventes par an, mais tous plafonnent la croissance.</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="v down">−5,7&nbsp;%</div><div class="k">population de la Nièvre en dix ans</div><div class="d down">211 747 → 199 666 hab.</div></div>
+    <div class="tile"><div class="v down">−9,5&nbsp;%</div><div class="k">revenu médian à Corbigny vs France</div><div class="d down">20 820 € / UC / an</div></div>
+    <div class="tile"><div class="v down">26,4&nbsp;%</div><div class="k">de logements vacants à Corbigny</div><div class="d down">287 sur 1 089</div></div>
+  </div>
+
+  <div class="callout">
+    <strong>Ce que ça implique.</strong> Un quart des logements vides au bourg-centre, c'est le signe d'une déprise réelle. Le projet ne doit pas viser Corbigny seul&nbsp;: la zone des 45&nbsp;minutes est ce qui rend le vivier suffisant. Et le pouvoir d'achat plus faible impose un premier prix accessible en gamme d'entrée.
+  </div>
+</section>
+
+<section>
+  <p class="lbl eyebrow">04 — La concurrence</p>
+  <h2>Un seul vrai concurrent bois dans tout le département</h2>
+  <p>La recherche n'a identifié qu'une entreprise proposant explicitement des carports bois sur mesure dans la Nièvre.</p>
+
+  <div class="rows">
+    <div class="row">
+      <div class="r-k"><strong>Bois Concept 58</strong> — Alluy (58110)
+        <span class="r-note">Constructions bois sur mesure, carports inclus. Seul concurrent frontal identifié. À environ 45 km de Corbigny.</span></div>
+      <div class="r-v">Direct</div>
+    </div>
+    <div class="row">
+      <div class="r-k"><strong>Scierie du Val de Loire</strong> — Saint-Éloi (58000)
+        <span class="r-note">Commercialise des carports, mais son site précise l'aluminium. Pas de concurrence bois confirmée.</span></div>
+      <div class="r-v">Indirect</div>
+    </div>
+    <div class="row">
+      <div class="r-k"><strong>Fenêtres du Nivernais</strong> — Varennes-Vauzelles (58640)
+        <span class="r-note">Pose des carports ; le matériau n'est pas précisé. À confirmer par un appel.</span></div>
+      <div class="r-v">À vérifier</div>
+    </div>
+    <div class="row">
+      <div class="r-k"><strong>Menuisiers et charpentiers locaux</strong> — Corbigny, Clamecy, Tannay
+        <span class="r-note">FCS, Meubles Dufour, Entreprise Viodé, JM Menuiseries, Menuiserie Laleu, Pascal Cojean. Généralistes&nbsp;: aucun ne met le carport en avant.</span></div>
+      <div class="r-v">Latent</div>
+    </div>
+  </div>
+
+  <div class="callout" style="border-left:3px solid var(--amber)">
+    <strong>Le vrai concurrent n'est pas un artisan, c'est un rayon.</strong> Brico&nbsp;Dépôt vend un carport bois 3&nbsp;×&nbsp;5&nbsp;m à <span class="num">229&nbsp;€</span> et un double à <span class="num">699&nbsp;€</span>. Leroy&nbsp;Merlin démarre à <span class="num">425&nbsp;€</span>. Ni l'un ni l'autre ne publie de tarif de pose de carport&nbsp;: elle se fait sur devis, par un partenaire. C'est précisément la faille à exploiter.
+  </div>
+</section>
+
+<section>
+  <p class="lbl eyebrow">05 — Les prix</p>
+  <h2>Où se situer</h2>
+
+  <figure>
+    <div class="chart" role="img" aria-label="Échelle de prix, de 0 à 8 000 euros : kit grande surface 229 à 700 ; kit double 1 750 à 2 100 ; auvent adossé posé 2 000 à 4 000 ; carport bois une voiture posé 1 400 à 5 200 ; carport bois deux voitures posé 3 500 à 7 500.">
+      <div class="crow">
+        <div class="top"><span class="cname">Kit grande surface, sans pose</span><span class="cval">229 – 700 €</span></div>
+        <div class="track"><div class="fill amber" style="left:2.9%;width:5.9%"></div></div>
+      </div>
+      <div class="crow">
+        <div class="top"><span class="cname">Kit double, sans pose</span><span class="cval">1 750 – 2 100 €</span></div>
+        <div class="track"><div class="fill amber" style="left:21.9%;width:4.4%"></div></div>
+      </div>
+      <div class="crow">
+        <div class="top"><span class="cname">Auvent adossé bois, posé</span><span class="cval">2 000 – 4 000 €</span></div>
+        <div class="track"><div class="fill blue" style="left:25.0%;width:25.0%"></div></div>
+      </div>
+      <div class="crow">
+        <div class="top"><span class="cname">Carport bois 1 voiture, posé</span><span class="cval">1 400 – 5 200 €</span></div>
+        <div class="track"><div class="fill" style="left:17.5%;width:47.5%"></div></div>
+      </div>
+      <div class="crow">
+        <div class="top"><span class="cname">Carport bois 2 voitures, posé</span><span class="cval">3 500 – 7 500 €</span></div>
+        <div class="track"><div class="fill" style="left:43.8%;width:50.0%"></div></div>
+      </div>
+      <div class="scale"><span>0 €</span><span>2 000</span><span>4 000</span><span>6 000</span><span>8 000 €</span></div>
+    </div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--green)"></i>Fourni et posé, bois</span>
+      <span><i class="sw" style="background:var(--blue)"></i>Adossé, posé</span>
+      <span><i class="sw" style="background:var(--amber)"></i>Kit seul</span>
+    </div>
+    <figcaption>Relevés 2025-2026&nbsp;: Azenco, Les-Meilleurs-Artisans, Leroy Merlin, Brico Dépôt, France Abris. Prix TTC, hors dalle béton et terrassement.</figcaption>
+  </figure>
+
+  <div class="rows">
+    <div class="row"><div class="r-k">Repère à retenir — carport bois double posé<span class="r-note">Le cœur de gamme, hors fondations lourdes</span></div><div class="r-v">4 500 – 6 500 €</div></div>
+    <div class="row"><div class="r-k">Surcoût de l'aluminium<span class="r-note">Sur un modèle une voiture posé</span></div><div class="r-v">+25 à 50 %</div></div>
+    <div class="row"><div class="r-k">Abri agricole ossature bois<span class="r-note">Hors dalle, terrain et fondations</span></div><div class="r-v">70 – 200 €/m²</div></div>
+    <div class="row"><div class="r-k">Tarif horaire charpentier<span class="r-note">Référence nationale 2026</span></div><div class="r-v">40 – 60 €&nbsp;HT</div></div>
+  </div>
+</section>
+
+<section>
+  <p class="lbl eyebrow">06 — L'économie du projet</p>
+  <h2>Cinq carports, dix-neuf jours</h2>
+  <p>Hypothèse de mix&nbsp;: trois carports une voiture à 2&nbsp;800&nbsp;€ et deux carports doubles à 5&nbsp;500&nbsp;€.</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="v">19&nbsp;400&nbsp;€</div><div class="k">chiffre d'affaires annuel TTC</div></div>
+    <div class="tile"><div class="v up">13&nbsp;580&nbsp;€</div><div class="k">marge brute après matière</div><div class="d">matière estimée à 30 %</div></div>
+    <div class="tile"><div class="v">715&nbsp;€</div><div class="k">de marge brute par jour travaillé</div><div class="d">19 jours de fabrication et pose</div></div>
+  </div>
+  <p class="note">Hors charges sociales, assurance décennale, véhicule et outillage. Le ratio tient parce que le porteur fabrique lui-même&nbsp;: acheter des kits pour les reposer diviserait la marge.</p>
+</section>
+
+<section>
+  <p class="lbl eyebrow">07 — Ce qu'il faut savoir avant de poser</p>
+  <h2>Trois seuils et une taxe</h2>
+  <div class="rows">
+    <div class="row"><div class="r-k">Jusqu'à 5 m² d'emprise au sol<span class="r-note">Sauf modification de l'aspect d'un bâtiment existant</span></div><div class="r-v">Aucune formalité</div></div>
+    <div class="row"><div class="r-k">De 5 à 20 m²<span class="r-note">Le cas d'un carport une voiture</span></div><div class="r-v">Déclaration préalable</div></div>
+    <div class="row"><div class="r-k">Au-delà de 20 m²<span class="r-note">Le cas de presque tous les carports doubles, ~30 m²</span></div><div class="r-v">Permis de construire</div></div>
+    <div class="row"><div class="r-k">Taxe d'aménagement 2026<span class="r-note">Par emplacement de stationnement, et non au m². Environ 146 € pour un taux global de 5 %.</span></div><div class="r-v">2 928 € d'assiette</div></div>
+  </div>
+  <div class="callout">
+    <strong>Corbigny et Vézelay sont en secteur protégé.</strong> En périmètre de monument historique, la déclaration préalable est exigée dès le premier mètre carré, et l'avis de l'architecte des Bâtiments de France s'ajoute au délai. Sur ces communes, <strong>prendre en charge le dossier d'urbanisme est un argument de vente</strong>, pas une corvée&nbsp;: c'est exactement ce qu'un client ne sait pas faire seul et ce qu'un kit ne lui apportera jamais.
+  </div>
+</section>
+
+<section>
+  <p class="lbl eyebrow">08 — Recommandation</p>
+  <h2>Se lancer, mais pas sur le prix</h2>
+  <ul class="plain">
+    <li class="p"><strong>Viser le carport double.</strong> 6&nbsp;076 foyers de la zone ont deux voitures ou plus. Le ticket est deux fois supérieur pour un temps de pose loin d'être doublé.</li>
+    <li class="p"><strong>Vendre ce que le kit ne sait pas faire&nbsp;:</strong> le sur-mesure adapté au terrain en pente, le douglas local, la reprise d'un existant, et surtout le dossier d'urbanisme géré de bout en bout.</li>
+    <li class="p"><strong>Attaquer les résidences secondaires.</strong> 5&nbsp;326 dans la zone. Propriétaires absents, sans temps ni outillage sur place, et davantage habitués aux prix urbains.</li>
+    <li class="p"><strong>Tester l'abri agricole.</strong> À 70-200&nbsp;€/m², un seul bâtiment de 200&nbsp;m² pèse plus que les cinq carports annuels réunis. La Nièvre compte encore 2&nbsp;748 exploitations.</li>
+    <li class="n"><strong>Ne jamais s'aligner sur les 229&nbsp;€ de Brico Dépôt.</strong> C'est un produit différent vendu à un client différent. Entrer dans cette comparaison, c'est perdre.</li>
+    <li class="n"><strong>Tenir compte de la saisonnalité.</strong> Les recherches sur le carport culminent au printemps et s'effondrent de décembre à février. Prévoir la trésorerie du creux hivernal.</li>
+  </ul>
+</section>
+
+<section>
+  <p class="lbl eyebrow">09 — L'étape suivante</p>
+  <h2>Valider sur le terrain, en dix questions</h2>
+  <p>Cette étude repose sur des statistiques publiques. Elle ne dit pas ce que <em>ces</em> habitants-là sont prêts à payer. Soixante à quatre-vingts réponses suffisent à dégager une tendance exploitable.</p>
+  <p class="note" style="margin-bottom:0">Où&nbsp;: marché de Corbigny, sortie de supermarché, déchetterie, jardinerie, un samedi matin. Filtrer d'emblée sur la question&nbsp;1.</p>
+
+  <ol class="q">
+    <li>Êtes-vous propriétaire ou locataire&nbsp;?<span class="why">Filtre. Si locataire, arrêter là.</span></li>
+    <li>Combien de véhicules dans le foyer&nbsp;?</li>
+    <li>Sont-ils abrités&nbsp;? Garage fermé, abri ouvert, ou dehors&nbsp;?<span class="why">Seul «&nbsp;dehors&nbsp;» est un prospect.</span></li>
+    <li>Si dehors&nbsp;: est-ce que ça vous pose un problème&nbsp;? Lequel&nbsp;?<span class="why">Gel, grêle, feuilles, fientes, usure de la peinture. Ce sont les mots de l'argumentaire.</span></li>
+    <li>Avez-vous déjà envisagé un carport ou un abri de voiture&nbsp;?</li>
+    <li>Si oui, qu'est-ce qui vous a arrêté&nbsp;?<span class="why">Prix, démarches administratives, pas prioritaire, ou aucun artisan trouvé. Cette dernière réponse vaut de l'or.</span></li>
+    <li>À votre avis, combien coûte un carport bois deux voitures posé&nbsp;?<span class="why">La question décisive. Elle mesure l'écart entre le prix perçu et les 4 500 - 6 500 € réels.</span></li>
+    <li>Quel budget maximum y consacreriez-vous&nbsp;?</li>
+    <li>Kit à monter soi-même, ou sur-mesure posé&nbsp;?<span class="why">Mesure directe de la menace grande surface.</span></li>
+    <li>Résidence principale ou secondaire&nbsp;?<span class="why">Croiser avec le budget déclaré&nbsp;: l'écart attendu valide ou non la cible résidence secondaire.</span></li>
+  </ol>
+
+  <div class="callout">
+    <strong>Ce qu'il faut regarder en dépouillant.</strong> Si le prix perçu en question&nbsp;7 est nettement inférieur à 4&nbsp;500&nbsp;€, le travail à faire n'est pas commercial mais pédagogique&nbsp;: il faudra montrer des chantiers, pas des devis. Et si «&nbsp;aucun artisan trouvé&nbsp;» revient souvent en question&nbsp;6, c'est le meilleur signal possible — la demande existe et personne ne la sert.
+  </div>
+</section>
+
+<section>
+  <p class="lbl eyebrow">10 — Méthode</p>
+  <h2>Comment ces chiffres ont été obtenus</h2>
+  <p>Trente recherches web sourcées, menées le 18 septembre 2026, priorité aux données 2024-2026.</p>
+
+  <details>
+    <summary>Hypothèses de dimensionnement</summary>
+    <div class="body">
+      <p>La zone des 45 minutes est estimée à <strong>50&nbsp;000 habitants</strong>, soit 25&nbsp;% de la Nièvre. Ce n'est pas une donnée INSEE&nbsp;: c'est une agrégation de la communauté de communes Tannay-Brinon-Corbigny (9&nbsp;394 habitants, INSEE 2022) et des bassins voisins de Clamecy, Prémery, Varzy, Lormes, Château-Chinon et Moulins-Engilbert.</p>
+      <p>Les taux appliqués sont départementaux et sourcés&nbsp;: 78,4&nbsp;% de maisons individuelles et 85,7&nbsp;% de ménages motorisés (RP 2023), 68,1&nbsp;% de propriétaires (RP 2022), 15,0&nbsp;% de résidences secondaires (RP 2023). Appliquer une moyenne départementale à une sous-zone rurale lisse les écarts locaux&nbsp;: les ordres de grandeur sont fiables, la décimale ne l'est pas.</p>
+      <p>Deux recherches sur trente ont échoué (prix du bois de construction, densité d'artisans en SIRENE) et ne sont pas intégrées.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Sources principales</summary>
+    <div class="body">
+      <p><strong>Démographie et logement</strong> — <a href="https://www.insee.fr/fr/statistiques/2011101?geo=DEP-58">INSEE, dossier complet Nièvre</a>, recensements 2022 et 2023&nbsp;; comparateur de territoires&nbsp;; estimation de population au 1ᵉʳ janvier 2025&nbsp;; Filosofi 2021 pour les revenus.</p>
+      <p><strong>Motorisation</strong> — INSEE, tableau LOG&nbsp;T12, RP 2023&nbsp;; SDES, parc de véhicules routiers au 1ᵉʳ janvier 2026.</p>
+      <p><strong>Prix</strong> — Azenco, Les-Meilleurs-Artisans, Abri2jardin, La Mignonne Couverture, catalogues Leroy Merlin et Brico Dépôt, France Abris, Obat (tarifs BTP 2026).</p>
+      <p><strong>Concurrence</strong> — répertoire SIRENE, annuaire-entreprises.data.gouv.fr, sites des entreprises citées.</p>
+      <p><strong>Réglementation</strong> — <a href="https://www.service-public.fr/particuliers/vosdroits/F36773">Service-Public.fr</a>, fiche «&nbsp;Pergola, carport ou abri à bois&nbsp;»&nbsp;; Code de l'urbanisme, articles R.&nbsp;421-1 et suivants&nbsp;; BOFiP pour la taxe d'aménagement 2026.</p>
+      <p><strong>Agriculture</strong> — Agreste, recensement agricole 2020.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Limites à connaître</summary>
+    <div class="body">
+      <p>Il n'existe <strong>aucune statistique publique isolant le marché du carport en France</strong>&nbsp;: pas de code NAF dédié, les acteurs sont répartis entre construction, menuiserie et commerce. Toute taille de marché nationale circulant sur le sujet est une estimation privée à périmètre variable, et n'a pas été retenue ici.</p>
+      <p>Le taux d'équipement en carport des ménages n'est mesuré nulle part. L'entonnoir donne donc un <strong>vivier</strong>, pas un marché annuel&nbsp;: il indique combien de foyers sont éligibles, pas combien achèteront. C'est précisément ce que l'enquête terrain doit combler.</p>
+      <p>Enfin, le revenu médian de Corbigny date de 2021, dernier millésime communal produit par l'INSEE.</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  Étude réalisée le 18 septembre 2026 · Données INSEE, SDES, Agreste, SIRENE et relevés de prix 2025-2026 · Les fourchettes de prix sont des relevés commerciaux, pas des statistiques officielles.
+</footer>
+
+</div>
