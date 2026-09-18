@@ -60,24 +60,49 @@ PERPLEXITY_API_KEY=pplx-...
 l'environnement peut lire cette valeur.* À réserver à une clé dédiée,
 révocable depuis [console.perplexity.ai](https://console.perplexity.ai).
 
-**B — API credential** (plans Pro et Max uniquement)
+**B — API credential** (plans Pro et Max uniquement) — **méthode retenue**
 
-Section **API credentials**, sous **Environment variables**. La clé est
-attachée aux requêtes par le proxy *après* leur sortie de la session : elle
-n'atteint jamais Claude, ni les commandes exécutées, ni les variables
-d'environnement.
+Section **Identifiants API** → **Ajouter un identifiant**. La clé est attachée
+aux requêtes par le proxy *après* leur sortie de la session : elle n'atteint
+jamais Claude, ni les commandes exécutées, ni les variables d'environnement.
 
-- Host : `api.perplexity.ai`
-- Custom header : **Name** `Authorization`, **Prefix** `Bearer`, **Value** la clé
+| Champ | Valeur |
+|---|---|
+| Nom | `Perplexity API` |
+| Type d'identifiant | `Bearer` |
+| **Sites web autorisés** | **`api.perplexity.ai`** |
+| En-tête : Nom / Préfixe / Valeur | `Authorization` / `Bearer` / la clé |
 
-Avantage : cette méthode ouvre aussi l'accès réseau au host déclaré, ce qui
-rend l'étape 1 facultative.
+Le champ **Sites web autorisés** est celui qu'on oublie : vide, l'identifiant
+ne s'applique à aucun host et ne débloque rien.
 
-Réserve à vérifier : le code du repo refuse de démarrer si `PERPLEXITY_API_KEY`
-est vide (`_client()` lève `PerplexityConfigError`), et le SDK pose son propre
-en-tête `Authorization`. Un test est nécessaire pour confirmer que les deux
-en-têtes ne se contredisent pas. **En cas de doute, la méthode A est le chemin
-sûr.**
+Avec cette méthode, **Accès réseau** peut rester sur **De confiance** : les
+hosts déclarés sur un identifiant API sont joignables même si le niveau
+d'accès réseau ne les autoriserait pas. L'étape 1 devient facultative.
+
+#### Variable d'environnement factice obligatoire
+
+Le code refuse de démarrer si `PERPLEXITY_API_KEY` est absente — `_client()`
+lève `PerplexityConfigError` **avant** d'émettre la requête, donc avant que le
+proxy puisse injecter la clé. Il faut donc quand même renseigner, dans
+**Variables d'environnement** :
+
+```
+PERPLEXITY_API_KEY=placeholder-la-vraie-cle-est-injectee-par-le-proxy
+```
+
+Ce n'est pas un secret : la vraie clé reste dans l'identifiant API.
+
+#### Réserve à vérifier
+
+Le SDK pose son propre en-tête `Authorization: Bearer <placeholder>`. Le proxy
+doit le **remplacer**, pas l'ajouter en double — sinon Perplexity renvoie 401.
+Le lien **« Voir l'exemple curl résolu »** du dialogue montre la requête
+réellement émise : un seul en-tête `Authorization` = configuration correcte.
+
+En cas d'échec, repli sur la méthode A : supprimer l'identifiant, passer
+**Accès réseau** en **Custom** avec `api.perplexity.ai`, et mettre la vraie
+clé dans `PERPLEXITY_API_KEY`.
 
 ### 3. Ouvrir une nouvelle session
 
