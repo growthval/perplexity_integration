@@ -108,6 +108,13 @@ casse la liste en production**, silencieusement.
 Procédure obligatoire sur tout élément d'une Collection List :
 `get_attributes` → reprendre l'intégralité de la liste → y ajouter ou modifier → `set_attributes`.
 
+**Corollaire — un contenu qui ressemble à un oubli peut être un template.** Les slides et cartes
+statiques portant du « Lorem ipsum » ou « This is some text inside of a div block » à l'intérieur
+d'une instance Finsweet sont souvent le **modèle que le script remplace à l'exécution** : le DOM
+publié n'en contient plus rien. **Ne jamais supprimer un nœud statique d'une liste Finsweet sans
+avoir vérifié le rendu publié** (`loremInHTML`, nombre d'éléments après exécution du script).
+Le supprimer casse la liste, et l'anomalie n'existait que dans le Designer.
+
 ### Dette de nommage existante
 
 Trois conventions coexistent aujourd'hui sur le site :
