@@ -163,11 +163,13 @@ Lance `data_agent_instructions_tool > generate_instruction` pour, dans cet ordre
 3. `asset-guidelines`
 4. `cms-guidelines` — celui-ci exige une collection CMS en source primaire : demande-moi laquelle,
    ou propose la plus structurante après avoir listé les collections.
-   ⚠️ **Piège connu** : `cms-guidelines` renvoie un 400 si `context_sources` contient une clé
-   `additional`, même vide. La doc de l'outil est explicite — les CMS guidelines exigent une
-   source primaire `cms-collection` **et aucune source additionnelle**. En cas de 400, réessaie
-   avec un `context_sources` ne contenant **que** `primary`, sans clé `additional` du tout.
-   Si ça échoue encore, signale-le et passe à la suite : ce brouillon peut s'écrire à la main.
+   ⚠️ **Constat, pas remède** : en **MCP 2.1.0**, `cms-guidelines` renvoie **400** même avec un
+   `context_sources` réduit à `{"primary": {"kind": "cms-collection", "collectionId": "…"}}`.
+   Vérifié sur trois tentatives et deux collections distinctes. Ce n'est **pas** la contrainte
+   « aucune source additionnelle » du schéma : les payloads en cause n'en portaient aucune.
+   Cause inconnue à ce jour. **N'y passe pas de temps** : tente une fois, et si c'est 400,
+   écris ce brouillon à la main depuis la collection la plus structurée. Les trois autres types
+   (`design-system`, `brand-guidelines`, `asset-guidelines`) fonctionnent normalement.
 
 C'est **asynchrone** : premier appel → `taskId`, puis rappels avec `task_id` jusqu'à `finished`
 ou `failed`, puis lecture du `resourceUri`. Les résultats sont des **brouillons** :
