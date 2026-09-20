@@ -21,9 +21,9 @@ Avant de créer un style, une variable ou un composant, inspecter l'existant :
 
 ## Nommage
 
-Ce site utilise : `<Client-First | Lumos | système maison>`.
+Ce site utilise : `Client-First`.
 
-- Convention de classes : `<décrire, avec 3 exemples réels du site>`
+- Convention de classes : `main-wrapper, text-align-center, layout486_content-left, layout486_number-wrapper`
 - Convention de composants : `<décrire>`
 - Structure de section attendue :
 
