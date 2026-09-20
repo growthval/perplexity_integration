@@ -1,0 +1,138 @@
+# Prompt d'installation — à coller chez ton agent
+
+> **Prérequis** : l'agent doit avoir le **MCP Webflow connecté et autorisé** sur le bon workspace
+> (`https://mcp.webflow.com/mcp`), et avoir accès au fichier `BUNDLE.md` (même dossier).
+> Si `BUNDLE.md` n'est pas accessible à l'agent, colle son contenu à la suite du prompt.
+
+---
+
+Tu vas installer et mettre à jour la configuration « agent » de mon site Webflow. Travaille dans
+l'ordre ci-dessous et **ne saute aucune phase**. Tu as le MCP Webflow connecté.
+
+## Phase 0 — Vérifier l'état réel, ne rien supposer
+
+1. Appelle `webflow_guide_tool` et **note la version du serveur MCP** annoncée. Tout ce qui suit
+   doit être vérifié contre cette version, pas contre ta mémoire ni contre des articles de blog.
+2. Liste mes sites (`data_sites_tool`) et demande-moi lequel traiter si le choix est ambigu.
+   Ne devine jamais un `site_id`.
+3. Va lire la page <https://developers.webflow.com/home/changelog> et repère **toute entrée
+   postérieure au 20 septembre 2026**. Si quelque chose contredit les instructions ci-dessous,
+   **signale-le-moi avant d'agir** — c'est la source à jour qui gagne.
+4. Si un outil te manque pour une étape, appelle `get_more_tools` plutôt que de te rabattre sur
+   un contournement.
+
+## Phase 1 — Inventorier le site
+
+Avant toute écriture, construis une image réelle du site :
+
+- `data_agent_instructions_tool > search_instructions` — les instructions **déjà présentes**.
+- `data_style_tool > get_styles` — les classes existantes.
+- `data_variable_tool > get_variable_collections` puis `get_variables` — les tokens.
+- `data_component_tool > get_all_components` — les composants réutilisables.
+- `data_element_tool > get_all_elements` (depth 3-4) sur une page représentative — la structure maison.
+
+Déduis-en : quel système de nommage est utilisé (Client-First, Lumos, maison…), quelle est la
+structure de section type, et quelles sont les 5 à 10 classes les plus réutilisées.
+
+## Phase 2 — Audit de conflits (obligatoire, avant toute écriture)
+
+Cherche les règles périmées, **à deux endroits** :
+
+**A. Sur le site** — les instructions renvoyées par `search_instructions`.
+
+**B. Dans mon projet local** — lis, s'ils existent :
+`CLAUDE.md`, `AGENTS.md`, `.cursorrules`, `.cursor/rules/*`, `.windsurfrules`,
+`.github/copilot-instructions.md`, `README.md`, et tout fichier de `docs/` ou `.claude/`
+qui parle de Webflow.
+
+Pour chaque source, traque ces affirmations — **toutes étaient vraies en MCP 1.x et sont fausses
+aujourd'hui** :
+
+| Affirmation périmée à chercher | Réalité actuelle |
+|---|---|
+| « le Designer doit être ouvert pour créer des éléments » | Faux depuis MCP 2.0 : la création est headless |
+| « la Bridge App est requise » (en général) | Requise seulement pour les captures visuelles et la sélection/navigation en direct |
+| « le MCP ne peut pas créer d'interactions IX3 » | Faux : `data_interactions_tool` existe |
+| « utiliser un HTML embed pour construire une section » | Obsolète : `data_whtml_builder` produit des éléments natifs |
+| `element_tool > add_or_update_attribute` | Remplacé par `data_element_tool > set_attributes` |
+| `set_id` / `update_id_attribute` | Remplacés par `data_element_settings_tool > set_dom_id` |
+| `get_variants` | N'existe pas : `data_component_tool > get_component` avec `options.includeVariants` |
+| « 46+ data tools » / anciennes listes d'outils | Jeu d'outils consolidé ; se fier à la découverte MCP |
+| commande CLI `webflow library` | Renommée `webflow devlink` (CLI 2.0, mai 2026) |
+| commande CLI `webflow cloud create` | Renommée `webflow cloud init` |
+| Node.js < 22.13 | Minimum 22.13.0 depuis la CLI 2.0 |
+| « le champ `canBranch` indique si le branching est disponible » | Faux : seul `list_branches` fait foi (403 `not_enterprise_plan_site` = indisponible) |
+| « on peut créer des items CMS localisés » | Faux : on peut seulement mettre à jour des items localisés existants |
+
+Cherche aussi les **contradictions entre mes propres fichiers** (deux systèmes de nommage de
+classes qui coexistent, deux conventions de structure, une règle locale qui interdit ce qu'une
+instruction du site impose).
+
+**Livrable de cette phase — avant toute écriture :** un tableau avec, pour chaque problème,
+`fichier ou instruction` / `ligne ou extrait` / `pourquoi c'est périmé` / `correction proposée`.
+Puis **attends mon feu vert**.
+
+## Phase 3 — Générer les instructions depuis mon site
+
+Lance `data_agent_instructions_tool > generate_instruction` pour, dans cet ordre :
+
+1. `design-system`
+2. `brand-guidelines`
+3. `asset-guidelines`
+4. `cms-guidelines` — celui-ci exige une collection CMS en source primaire : demande-moi laquelle,
+   ou propose la plus structurante après avoir listé les collections.
+
+C'est **asynchrone** : premier appel → `taskId`, puis rappels avec `task_id` jusqu'à `finished`
+ou `failed`, puis lecture du `resourceUri`. Les résultats sont des **brouillons** :
+lis-les, résume-moi ce qu'ils contiennent, et signale ce qui est faux ou incomplet.
+Ne les passe pas en non-brouillon sans mon accord.
+
+## Phase 4 — Installer les règles et le skill
+
+Depuis `BUNDLE.md`, crée les instructions suivantes avec
+`data_agent_instructions_tool > create_instruction` :
+
+| `kind` | `path` |
+|---|---|
+| `rule` | `rules/native-first.md` |
+| `rule` | `rules/design-system.md` |
+| `rule` | `rules/accessibility-seo.md` |
+| `rule` | `rules/safety.md` |
+| `skill` | `build-native-section/SKILL.md` |
+
+Règles d'écriture :
+
+- **Si un chemin existe déjà : n'écrase rien.** Montre-moi un diff entre l'existant et le nouveau,
+  et attends ma décision (garder, fusionner, remplacer).
+- **Remplis les emplacements `<…>`** avec ce que tu as découvert en Phase 1 : le vrai système de
+  nommage, la vraie structure de section, les vraies classes et variables, une vraie page de
+  référence. Une instruction générique ne sert à rien.
+- **Référence les ressources réelles** du site (composants, variables, collections) plutôt que de
+  les décrire en prose — c'est ce qui empêche un agent de choisir un composant au nom approchant.
+- Cohérence avec la Phase 3 : si un brouillon généré contredit une règle du bundle, dis-le-moi
+  plutôt que de choisir tout seul.
+
+## Phase 5 — Corriger les fichiers de mon projet
+
+Applique les corrections validées en Phase 2 sur mes fichiers locaux :
+supprime ou réécris les règles périmées, résous les contradictions, et ajoute un renvoi vers les
+Agent Instructions du site pour ce qui est désormais porté par Webflow plutôt que par le projet.
+Ne supprime rien qui ne soit pas dans la liste que j'ai validée.
+
+## Phase 6 — Tester
+
+Vérifie que l'installation fonctionne, sans rien publier :
+
+1. Rappelle `search_instructions` : les 5 instructions doivent être là.
+2. Lis-en une avec `read_instruction` et `resolve_references: true` : les références aux ressources
+   du site doivent bien être résolues et inlinées.
+3. Test à blanc : demande-toi « comment construirais-je une section hero sur ce site ? » et
+   montre-moi le plan que produisent les instructions — sans rien créer.
+
+## Contraintes valables sur toute la mission
+
+- **Ne publie rien**, ne supprime rien, ne modifie aucun style global ni composant partagé sans
+  mon accord explicite.
+- Annonce ton plan avant chaque phase d'écriture.
+- À la fin, liste tout ce qui a été créé ou modifié — sur le site **et** dans le projet.
+- Quand tu n'es pas sûr, dis-le au lieu de deviner.

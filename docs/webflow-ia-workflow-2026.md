@@ -375,6 +375,16 @@ l'espace Instructions de votre site (ou à pousser via
 | `rules/safety.md` | `rules/safety.md` | Ce qui exige une validation humaine |
 | `build-native-section/SKILL.md` | `build-native-section/SKILL.md` | Le playbook complet de construction d'une section |
 
+Et deux fichiers pour l'installation :
+
+- **`INSTALL-PROMPT.md`** — le prompt à coller chez votre agent. Il lui fait vérifier les
+  informations à jour (version du serveur MCP, changelog), inventorier le site, **auditer les
+  règles périmées** dans les instructions existantes et dans les fichiers du projet
+  (`CLAUDE.md`, `.cursorrules`…), générer les instructions depuis le site, installer le kit,
+  puis tester — avec un point d'arrêt avant chaque écriture significative.
+- **`BUNDLE.md`** — les 5 instructions en un seul document avec leurs `kind` et `path`,
+  pour que l'agent lise tout d'un coup. Régénéré par `make-bundle.py`.
+
 ---
 
 ## 7. Panorama des nouveautés IA Webflow (2025 → sept. 2026)
