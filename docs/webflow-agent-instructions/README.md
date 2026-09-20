@@ -8,10 +8,11 @@ De quoi faire construire à un agent IA (Claude, Cursor, Codex…) des pages Web
 | Fichier | À quoi ça sert |
 |---|---|
 | **`INSTALL-PROMPT.md`** | **Le prompt à coller chez ton agent.** Il fait tout : vérifier les infos à jour, inventorier le site, auditer les règles périmées, générer, installer, tester. |
-| **`BUNDLE.md`** | Les 5 instructions en un seul document, avec leurs `kind` et `path`. C'est ce que l'agent lit pour les installer. Généré — ne pas éditer à la main. |
+| **`BUNDLE.md`** | Les 6 instructions en un seul document, avec leurs `kind` et `path`. C'est ce que l'agent lit pour les installer. Généré — ne pas éditer à la main. |
 | `rules/native-first.md` | Interdit l'embed HTML par défaut, impose les outils natifs et leurs contraintes |
 | `rules/design-system.md` | Inventaire et réutilisation des styles, variables et composants avant toute création |
 | `rules/accessibility-seo.md` | Sémantique, hiérarchie des titres, alt, responsive, métadonnées |
+| `rules/localization.md` | Modèle Localize, les deux identifiants de locale, CMS multilingue, impacts sur le design |
 | `rules/safety.md` | Ce qui exige une validation humaine, et la vérification avant de dire « c'est fait » |
 | `build-native-section/SKILL.md` | Le playbook en 9 étapes pour construire une section |
 | `make-bundle.py` | Régénère `BUNDLE.md` après modification d'un fichier d'instruction |

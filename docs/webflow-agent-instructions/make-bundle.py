@@ -10,13 +10,14 @@ FILES = [
     ("rules/native-first.md", "rule"),
     ("rules/design-system.md", "rule"),
     ("rules/accessibility-seo.md", "rule"),
+    ("rules/localization.md", "rule"),
     ("rules/safety.md", "rule"),
     ("build-native-section/SKILL.md", "skill"),
 ]
 
 HEADER = """# BUNDLE — contenu des Agent Instructions à installer
 
-Ce fichier regroupe les 5 instructions à créer sur le site Webflow, dans un seul document, pour
+Ce fichier regroupe les 6 instructions à créer sur le site Webflow, dans un seul document, pour
 qu'un agent puisse tout lire d'un coup. Il est **généré** depuis les fichiers du dossier : ne pas
 l'éditer directement, éditer les fichiers sources puis relancer `python3 make-bundle.py`.
 

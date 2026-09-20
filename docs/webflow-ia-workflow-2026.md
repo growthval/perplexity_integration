@@ -373,6 +373,7 @@ l'espace Instructions de votre site (ou à pousser via
 | `rules/design-system.md` | `rules/design-system.md` | Réutilisation des styles et variables avant création |
 | `rules/accessibility-seo.md` | `rules/accessibility-seo.md` | Sémantique, hiérarchie des titres, alt, métadonnées |
 | `rules/safety.md` | `rules/safety.md` | Ce qui exige une validation humaine |
+| `rules/localization.md` | `rules/localization.md` | Modèle Localize, identifiants de locale, CMS multilingue, impacts sur le design |
 | `build-native-section/SKILL.md` | `build-native-section/SKILL.md` | Le playbook complet de construction d'une section |
 
 Et deux fichiers pour l'installation :
@@ -522,7 +523,8 @@ Designer sait exprimer — **et c'est natif**, contrairement à un embed.
 
 | Limite | Détail |
 |---|---|
-| **Locales CMS** | On peut mettre à jour des items localisés existants, **pas en créer de nouveaux**. La locale primaire est en lecture seule pour `data_localization_tool`. |
+| **Locales** | `data_localization_tool` **n'écrit que dans les locales secondaires** : la locale primaire est en lecture seule via cet outil (pour corriger le texte source, éditer l'élément avec `set_text`). ⚠️ Deux identifiants distincts cohabitent dans le champ `locales` du site : l'`id` de locale pour `data_localization_tool`, le `cmsLocaleId` pour `data_cms_tool`. |
+| **Items CMS localisés** | ✅ **Créables** depuis MCP 2.x : `create_collection_items` accepte `cmsLocaleIds` ou `allCmsLocales: true`, et les variantes sont liées sous un seul item ID. La création n'écrit qu'en **staging** — publier ensuite avec `publish_collection_items`. La limite de 100 items par requête compte **chaque variante de locale**. *(Plusieurs sources publiques affirment encore l'inverse : c'était une limite de MCP 1.x.)* |
 | **Branches** | **Enterprise uniquement.** Le champ `canBranch` **n'est pas** un signal d'éligibilité — seul `list_branches` fait foi (403 `not_enterprise_plan_site` = indisponible). |
 | **Interactions** | Une écriture acceptée ne garantit pas que l'animation tourne. Vérifier en Preview. |
 | **Accès et rôles** | Le MCP ne peut pas modifier les accès site/workspace, ajouter des utilisateurs ni attribuer des rôles. |

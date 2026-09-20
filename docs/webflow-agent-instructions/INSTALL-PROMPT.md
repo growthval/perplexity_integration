@@ -37,17 +37,22 @@ l'ordre ci-dessous et **ne saute aucune phase**. Tu as le MCP Webflow connecté.
 - Ce que le plan CMS permet et qui est utile ici : le CMS et ses collections, le custom code de
   site et de page, et la **publication de code components** (elle exige un plan site CMS ou
   supérieur, ou un workspace payant — le plan CMS suffit).
-- Analyze, Optimize et Localize sont des **add-ons séparés**. Ne présume pas qu'ils sont actifs :
-  si une action en dépend, teste d'abord et dis-moi ce que tu obtiens.
+- **Add-ons : seul Localize est actif.** Analyze et Optimize ne le sont **pas** — ne propose
+  aucun workflow qui en dépende (`data_analyze_tool` échouera, c'est normal).
+- **Le site est bilingue** : locale primaire `<FR>`, locale secondaire `<EN>` via Localize.
+  Une locale secondaire est une **surcouche de traduction** sur la même structure, pas une copie :
+  ne duplique jamais une page, un composant ou une collection pour l'anglais.
+  Les contrôles de ton/formalité de la traduction IA relèvent de l'offre Localize avancée :
+  teste avant d'en dépendre et dis-moi ce que tu obtiens.
 
 ## Phase 0 — Vérifier l'état réel, ne rien supposer
 
 1. Appelle `webflow_guide_tool` et **note la version du serveur MCP** annoncée. Tout ce qui suit
    doit être vérifié contre cette version, pas contre ta mémoire ni contre des articles de blog.
 2. Liste mes sites (`data_sites_tool`) et demande-moi lequel traiter si le choix est ambigu.
-   Ne devine jamais un `site_id`. Relève au passage les locales du site : la locale primaire est
-   en lecture seule pour `data_localization_tool`, et **on ne peut pas créer d'items CMS
-   localisés** — seulement mettre à jour ceux qui existent.
+   Ne devine jamais un `site_id`. Relève au passage le champ `locales` du site et **note les deux
+   identifiants distincts** qu'il contient : l'`id` de locale (pour `data_localization_tool`) et le
+   `cmsLocaleId` (pour `data_cms_tool`). Les confondre écrit dans la mauvaise locale.
 3. Va lire la page <https://developers.webflow.com/home/changelog> et repère **toute entrée
    postérieure au 20 septembre 2026**. Si quelque chose contredit les instructions ci-dessous,
    **signale-le-moi avant d'agir** — c'est la source à jour qui gagne.
@@ -63,6 +68,9 @@ Avant toute écriture, construis une image réelle du site :
 - `data_variable_tool > get_variable_collections` puis `get_variables` — les tokens.
 - `data_component_tool > get_all_components` — les composants réutilisables.
 - `data_element_tool > get_all_elements` (depth 3-4) sur une page représentative — la structure maison.
+- `data_localization_tool > list_components` — les composants localisables, et l'état actuel de la
+  locale EN sur une page représentative (`get_page_content` avec le `localeId` secondaire) :
+  qu'est-ce qui est déjà traduit, qu'est-ce qui ne l'est pas ?
 
 Déduis-en : quel système de nommage est utilisé (Client-First, Lumos, maison…), quelle est la
 structure de section type, et quelles sont les 5 à 10 classes les plus réutilisées.
@@ -96,6 +104,9 @@ aujourd'hui** :
 | Node.js < 22.13 | Minimum 22.13.0 depuis la CLI 2.0 |
 | « le champ `canBranch` indique si le branching est disponible » | Faux : seul `list_branches` fait foi (403 `not_enterprise_plan_site` = indisponible) |
 | toute règle qui suppose un workflow en branche | Indisponible sur ce site (plan CMS) : remplacer par page dupliquée en `draft` + publication staging |
+| « on ne peut pas créer d'items CMS localisés » | **Faux aujourd'hui** : `create_collection_items` accepte `cmsLocaleIds` et `allCmsLocales: true` |
+| toute règle qui crée une page, un composant ou une collection **dupliqués** pour l'anglais | Mauvais modèle : Localize est une surcouche sur la même structure |
+| toute règle qui suppose Analyze ou Optimize | Ces add-ons ne sont pas actifs sur ce site |
 | « on peut créer des items CMS localisés » | Faux : on peut seulement mettre à jour des items localisés existants |
 
 Cherche aussi les **contradictions entre mes propres fichiers** (deux systèmes de nommage de
@@ -131,6 +142,7 @@ Depuis le bundle récupéré en tête de prompt, crée les instructions suivante
 | `rule` | `rules/native-first.md` |
 | `rule` | `rules/design-system.md` |
 | `rule` | `rules/accessibility-seo.md` |
+| `rule` | `rules/localization.md` |
 | `rule` | `rules/safety.md` |
 | `skill` | `build-native-section/SKILL.md` |
 
@@ -162,6 +174,10 @@ Vérifie que l'installation fonctionne, sans rien publier :
    du site doivent bien être résolues et inlinées.
 3. Test à blanc : demande-toi « comment construirais-je une section hero sur ce site ? » et
    montre-moi le plan que produisent les instructions — sans rien créer.
+4. Second test à blanc : « comment ajouterais-je la version EN d'une nouvelle section ? »
+   Le plan doit passer par `data_localization_tool` sur la locale secondaire, **sans dupliquer
+   quoi que ce soit** et avec les bons identifiants de locale. S'il propose une page dupliquée,
+   la règle `rules/localization.md` n'a pas été prise en compte — signale-le.
 
 ## Contraintes valables sur toute la mission
 
