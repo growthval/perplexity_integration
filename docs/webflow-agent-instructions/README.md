@@ -17,16 +17,72 @@ De quoi faire construire à un agent IA (Claude, Cursor, Codex…) des pages Web
 | `build-native-section/SKILL.md` | Le playbook en 9 étapes pour construire une section |
 | `make-bundle.py` | Régénère `BUNDLE.md` après modification d'un fichier d'instruction |
 
-## Utilisation
+## Démarrer — Claude Code dans VS Code
 
-1. Ouvre une session avec ton agent, **MCP Webflow connecté et autorisé** sur le bon workspace.
-2. Donne-lui accès à ce dossier (ou au moins à `BUNDLE.md`).
-3. Colle le contenu de `INSTALL-PROMPT.md`.
-4. Réponds à ses questions aux points d'arrêt : choix du site, validation de l'audit de conflits,
-   choix de la collection CMS, décisions sur les instructions déjà présentes.
+### 1. Ouvre le bon dossier
 
-Le prompt est conçu pour **s'arrêter et demander** avant chaque écriture significative, et pour
-ne rien publier.
+Ouvre dans VS Code **le dossier de ton projet Webflow**, celui qui contient tes `CLAUDE.md`,
+`.cursorrules` et autres fichiers de règles. La session Claude Code démarre dans le dossier du
+workspace : si tu l'ouvres ailleurs, les phases 2 et 5 (audit et correction de tes fichiers)
+n'auront rien à lire.
+
+### 2. Mets ton dépôt au propre
+
+La Phase 5 **modifie tes fichiers**. Commite ou remise ce qui est en cours, et travaille sur une
+branche dédiée — tu veux pouvoir lire le diff et revenir en arrière.
+
+```bash
+git switch -c chore/webflow-agent-instructions
+```
+
+### 3. Branche le MCP Webflow (une seule fois)
+
+Dans le terminal :
+
+```bash
+claude mcp add --transport http --scope user webflow https://mcp.webflow.com/mcp
+```
+
+`--scope user` le rend disponible dans tous tes projets. Sinon : `--scope local` (défaut) pour ce
+projet seulement, `--scope project` pour le partager à ton équipe via un `.mcp.json` versionné.
+
+### 4. Autorise
+
+Dans la session Claude Code :
+
+```
+/mcp
+```
+
+Choisis `webflow` → authentifie-toi → une fenêtre de navigateur s'ouvre → connexion Webflow →
+sélectionne le **workspace** et les **sites** → *Authorize App*.
+
+À savoir :
+
+- Seuls les **owners et admins** d'un site peuvent l'autoriser ; les autres apparaissent grisés.
+- **Une autorisation = un seul workspace.** Pour en changer, il faut réautoriser.
+- Relance `/mcp` pour vérifier que `webflow` est bien connecté avant de continuer.
+
+### 5. Lance l'installation
+
+Premier message de la session :
+
+```
+Récupère https://raw.githubusercontent.com/growthval/perplexity_integration/claude/busy-franklin-i7zvly/docs/webflow-agent-instructions/INSTALL-PROMPT.md
+et applique-le intégralement, phase par phase.
+```
+
+Si ton agent ne peut pas récupérer d'URL, colle directement le contenu de `INSTALL-PROMPT.md`.
+
+Puis réponds à ses questions aux points d'arrêt : choix du site, validation de l'audit de conflits,
+choix de la collection CMS, décisions sur les instructions déjà présentes. Le prompt est conçu pour
+**s'arrêter et demander** avant chaque écriture significative, et pour ne rien publier.
+
+### 6. Plus tard : la Bridge App
+
+Pour les **captures visuelles** (`element_snapshot_tool`) et la sélection en direct dans le canvas,
+ouvre le site dans le Webflow Designer et lance **Webflow MCP Bridge App** depuis le panneau Apps,
+puis laisse-la ouverte. Elle n'est **pas** nécessaire pour l'installation des instructions.
 
 ## Accès sans rien copier dans ton projet
 
