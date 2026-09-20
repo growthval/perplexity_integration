@@ -11,11 +11,12 @@ accord explicite**.
 
 ## Règles valables du début à la fin
 
-- **Aucune suppression, aucun déplacement, aucune réécriture pendant les phases A à E.** Tu lis,
+- **Aucune suppression, aucun déplacement, aucune réécriture pendant les phases A à F.** Tu lis,
   tu classes, tu proposes. Rien d'autre.
 - **Un fichier dont tu ne comprends pas l'usage n'est pas un fichier mort.** Il va dans
   « à clarifier », et tu me poses la question. Le doute ne tranche jamais vers la suppression.
-- **Ne sors jamais du dépôt.** Pas de `~/.claude/`, pas de fichiers hors du dossier du projet.
+- **Ne sors jamais du dépôt**, à une exception près : tu peux **lire** `E:\structure_maker`
+  (Phase E). Tu n'y écris rien. Et toujours pas de `~/.claude/` ni de fichiers hors du projet.
 - **Ne touche pas à `.agents/skills/` ni `.claude/skills/`.** Ils sont gérés par
   `webflow-skills-lock.json` et restaurés par la CLI. Tu peux les analyser, pas les modifier.
 - Si une action te paraît évidente mais destructive, elle passe quand même par mon accord.
@@ -103,7 +104,31 @@ Agent Instructions.
 - Le dépôt contient-il des fichiers de plus de 1 Mo ? Lesquels, et sont-ils justifiés ?
 - État courant : branche, fichiers modifiés non commités, commits non poussés.
 
-## Phase E — Le rapport
+## Phase E — L'arborescence cible passe par `structure_maker`
+
+Il y a sur **`E:\structure_maker`** un projet à moi qui sert à construire des infrastructures de
+projet propres. **L'arborescence cible ne s'invente pas : elle vient de lui.**
+
+1. Tu as le droit de **lire** ce dossier. Tu n'y écris rien, tu n'y modifies rien.
+2. **Comprends-le avant de t'en servir.** Lis son `README`, son point d'entrée, sa configuration,
+   et s'il s'exécute, son `--help`. Puis dis-moi en trois lignes : ce qu'il fait, comment on
+   l'invoque, ce qu'il produit. **Ne présume ni de son interface, ni de ses conventions, ni de son
+   format de configuration** — découvre-les.
+3. Ensuite, selon sa nature :
+   - **Il génère une arborescence** → fais-le tourner en simulation / `--dry-run` s'il en a un,
+     ou sur une copie. Jamais directement sur le projet à ce stade.
+   - **Il définit des conventions** (gabarit, schéma, documentation) → dérive l'arborescence cible
+     de ces conventions.
+   - **Il valide une structure existante** → passe le projet dedans et rapporte ses constats tels
+     quels, sans les réinterpréter.
+4. **Conflits : signale, ne tranche pas.** Certains chemins sont imposés par des outils externes
+   et ne sont pas négociables — `.claude/`, `.agents/`, `webflow-skills-lock.json`, `.vscode/`,
+   et tout chemin cité dans `CLAUDE.md` ou dans un hook. Si `structure_maker` veut les déplacer,
+   dis-le-moi, n'obéis pas.
+5. S'il est inaccessible, ou s'il ne s'applique pas à ce type de projet, **dis-le et continue** :
+   propose alors une arborescence cible classique. L'audit ne s'arrête pas pour autant.
+
+## Phase F — Le rapport
 
 Écris-le dans **`project-audit.md`** à la racine, et donne-m'en la synthèse en réponse.
 Structure attendue :
@@ -111,7 +136,9 @@ Structure attendue :
 1. **Bloquants** — secrets versionnés, contradictions de règles. En tête, rien avant.
 2. **Tableau d'inventaire** — une ligne par fichier ou dossier : chemin, verdict, justification
    en une phrase, action proposée.
-3. **Arborescence cible** — l'organisation que tu proposes, en regard de l'actuelle.
+3. **Arborescence cible** — celle dérivée de `structure_maker` (Phase E), en regard de
+   l'actuelle. Dis ce que tu as compris de l'outil, et signale explicitement chaque écart que tu
+   as dû arbitrer entre ses conventions et les contraintes du projet.
 4. **Plan d'exécution ordonné** — par groupes, du plus sûr au plus risqué, avec pour chaque groupe
    ce qui est réversible et ce qui ne l'est pas.
 5. **À clarifier** — tes questions, formulées pour que je puisse répondre par oui/non ou par un
@@ -121,11 +148,15 @@ Structure attendue :
 
 **Arrête-toi là et attends ma réponse.**
 
-## Phase F — Exécution, après mon accord seulement
+## Phase G — Exécution, après mon accord seulement
 
 Quand j'aurai validé, groupe par groupe :
 
 - Travaille sur une branche dédiée, en partant d'un état propre.
+- Applique l'arborescence cible de la Phase E. Si `structure_maker` sait faire les déplacements
+  lui-même, vérifie d'abord qu'il est **conscient de git** : sinon, laisse-le produire la cible et
+  fais les déplacements toi-même avec `git mv`, sans quoi l'historique se perd. Après son passage,
+  compare ce qu'il a réellement fait à ce qu'il avait annoncé.
 - **`git mv` pour tout déplacement** — jamais supprimer puis recréer, l'historique se perd.
 - **Rien ne se supprime au premier passage.** Ce qui est MORT part dans `_trash/` à la racine,
   avec `_trash/README.md` listant l'origine de chaque fichier et la date. Suppression réelle
@@ -135,7 +166,7 @@ Quand j'aurai validé, groupe par groupe :
   `webflow skills install --project` restaure toujours, les chemins cités dans `CLAUDE.md` existent.
 - Mets `CLAUDE.md` à jour **en dernier**, pour refléter la nouvelle arborescence.
 
-## Phase G — Feu vert pour construire
+## Phase H — Feu vert pour construire
 
 Une fois la remise en ordre faite, confirme point par point :
 
