@@ -70,10 +70,23 @@ l'ordre ci-dessous et **ne saute aucune phase**. Tu as le MCP Webflow connecté.
    **signale-le-moi avant d'agir** — c'est la source à jour qui gagne.
 4. Si un outil te manque pour une étape, appelle `get_more_tools` plutôt que de te rabattre sur
    un contournement.
-5. Si tu utilises la CLI Webflow : elle peut sortir en **code 1 sans aucun message** quand
-   `typescript` manque (dépendance tirée par `@module-federation/dts-plugin`). Symptôme
-   indébuggable de face. `npm install typescript` règle le problème — vérifie-le avant de
-   conclure à un bug de la CLI.
+5. **Si la CLI Webflow sort en code 1 sans aucun message**, c'est presque toujours le peer
+   `typescript` manquant. Ce n'est pas un bug d'empaquetage : `@module-federation/dts-plugin`
+   (tiré par `@module-federation/enhanced`, dépendance de la CLI) déclare
+   `typescript: ^4.9.0 || ^5.0.0` en **peerDependency non optionnelle**. npm 7+ l'installe
+   automatiquement — sauf si l'installation a été faite avec `--legacy-peer-deps`, `--omit=peer`,
+   yarn v1, ou pnpm sans `auto-install-peers`. La CLI avale ensuite l'erreur et quitte en
+   silence : `--trace-uncaught` et `--unhandled-rejections=strict` ne montrent rien.
+
+   **Diagnostic** — une ligne, qui affiche l'erreur réelle :
+
+   ```bash
+   node -e "require('@module-federation/dts-plugin')"   # → Cannot find module 'typescript'
+   ```
+
+   **Correctif** : `npm install -D typescript@^5` (en **devDependency** : c'est un outil de
+   build, pas une dépendance d'exécution). Puis vérifier la cause racine — un
+   `legacy-peer-deps=true` dans `.npmrc` fera silencieusement disparaître d'autres peers plus tard.
 
 ## Phase 1 — Inventorier le site
 
