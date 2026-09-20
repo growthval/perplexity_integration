@@ -407,6 +407,7 @@ connecté, sans fichier nulle part.
 | 21 mai 2026 | **MCP 1.3** — +30 outils : composants, props, variantes, branches | Livré |
 | 21 mai 2026 | DevLink exporte les Interactions (moteur GSAP) | Livré |
 | 29 mai 2026 | **CLI 2.0** — `webflow library` → `webflow devlink`, `cloud create` → `cloud init`, Node ≥ 22.13 | Livré |
+| 17 sept. 2026 | **`webflow apps` promu GA** — namespace canonique de Webflow Cloud dans la CLI (v2.8.0) ; `webflow cloud` déprécié | GA |
 | **21 juil. 2026** | **MCP 2.0 / 2.0.1 — le tournant** : la plupart des opérations deviennent headless, Agent Instructions, permissions et audit renforcés | Livré |
 | 24 août 2026 | Webflow disponible dans **Codex et ChatGPT** | Livré |
 | 28 août 2026 | **Slot restrictions** — garde-fous sur ce qu'on peut insérer dans un slot | Livré |
@@ -479,7 +480,11 @@ Designer sait exprimer — **et c'est natif**, contrairement à un embed.
 
 ### 8.3 CLI et DevLink
 
-- CLI : <https://developers.webflow.com/cli/command-reference>
+- CLI : <https://developers.webflow.com/cli/command-reference> — ⚠️ depuis le 17/09/2026, le
+  namespace Webflow Cloud est **`webflow apps`** (`webflow cloud` est déprécié). Vérifier la
+  surface courante avec `webflow apps --help`.
+- Skills officiels : <https://github.com/webflow/webflow-skills> — installables par
+  `webflow skills install` (avec `--dry-run`, `--agent claude-code,cursor`, lockfile).
 - DevLink (export de composants Webflow vers React, interactions GSAP incluses depuis mai 2026) :
   <https://developers.webflow.com/devlink/reference/overview>
 

@@ -113,7 +113,7 @@ conformer.
 
 | Famille | Forme | Rôle | Exemples réels du site |
 |---|---|---|---|
-| **Utilitaires Client-First** | `mot-mot` (tirets) | Mise en page, espacement, largeur, typo — **réutilisables partout** | `padding-global`, `container-large`, `padding-section-large`, `max-width-xlarge`, `text-align-center`, `margin-bottom`, `margin-top`, `text-size-medium`, `heading-style-h2` |
+| **Utilitaires Client-First** | `mot-mot` (tirets) | Mise en page, espacement, largeur, typo — **réutilisables partout** | `padding-global`, `padding-section-large\|medium\|small`, `container-large\|medium\|small`, `max-width-*`, `heading-style-h1..h6`, `text-size-*`, `text-weight-*`, `text-style-*`, `text-align-center`, `margin-bottom`, `margin-top`, `button`, `button-group` |
 | **Classes de composant Relume** | `bloc_élément` (underscore) | Identifient un bloc précis — **propres à ce composant** | `section_header30`, `header30_content`, `layout34_component`, `slider6_component`, `slider6_mask`, `layout370_card-small`, `layout486_content-left`, `layout486_number-wrapper` |
 
 Règles qui en découlent :
@@ -131,17 +131,20 @@ Règles qui en découlent :
 Relevée sur la page **Accueil**, à reproduire pour toute nouvelle section :
 
 ```
-section_<nom><NN>                     ← Section, classe de composant
+section_<nom><NN>.color-scheme-N      ← Section + son schéma de couleur (1 à 4)
 └── padding-global                    ← utilitaire : gouttières latérales
     └── container-large               ← utilitaire : largeur max
-        └── <nom><NN>_content         ← classe de composant
-            └── padding-section-large ← utilitaire : rythme vertical
+        └── padding-section-large     ← utilitaire : rythme vertical
+            └── <nom><NN>_component   ← classe de composant
                 └── text-align-center ← utilitaires empilés, un rôle chacun
                     └── max-width-xlarge
                         ├── margin-bottom
                         ├── text-size-medium
                         └── margin-top
 ```
+
+**Toute section porte une classe combo `color-scheme-1` à `color-scheme-4`** en plus de sa classe
+de section. Ne jamais poser une couleur en dur sur une section : choisir le schéma.
 
 **L'empilement d'utilitaires est voulu, ne pas l'aplatir.** Dans Client-First, chaque div porte
 une seule responsabilité (alignement, largeur max, marge). La tentation de fusionner
@@ -160,6 +163,48 @@ classes : c'est ce qui permet de retrouver le modèle plus tard.
 
 ⚠️ Cette structure est relevée sur une seule page. En phase d'inventaire, la **confirmer sur deux
 ou trois autres pages** et signaler tout écart plutôt que de généraliser.
+
+### Variables — les 4 collections réelles
+
+| Collection | Contenu |
+|---|---|
+| **Primitives** | Palettes (Vulcan, Blumine, Sea Green, El Salva, Affair), neutres, opacités, Bleu CTA `#1B56FF` |
+| **Color Schemes** | Schémas 1 à 4, chacun avec Text / Background / Foreground / Border / Accent |
+| **Typography** | Heading = Cabin, Body = Inter |
+| **UI Styles** | Rayons 0px partout, bordures 1px |
+
+Les noms réels ressemblent à `--color-scheme-1--text` et `--_primitives---colors--vulcan`.
+**Ne jamais inventer un nom de variable** de la forme `color--primary` ou `spacing--lg` : ça
+n'existe pas ici. Lire `get_variables` et utiliser les identifiants renvoyés.
+
+⚠️ Le **Bleu CTA `#1B56FF`** n'est câblé dans aucun Color Scheme aujourd'hui : il est appliqué en
+direct sur `.button`. Ne pas reproduire ce raccourci sur de nouveaux éléments sans le signaler.
+
+### ⚠️ Attributs Finsweet — à ne jamais écraser
+
+Les Collection Lists du site portent des attributs **Finsweet Attributes** (`fs-list-instance`,
+`fs-list-element`) qui pilotent filtres, tris et pagination côté client.
+
+**`set_attributes` remplace la liste complète d'attributs de l'élément**, et la clé `attributes` de
+`set_settings` aussi. Écrire un seul attribut sans reprendre les autres **supprime les `fs-*` et
+casse la liste en production**, silencieusement.
+
+Procédure obligatoire sur tout élément d'une Collection List :
+`get_attributes` → reprendre l'intégralité de la liste → y ajouter ou modifier → `set_attributes`.
+
+### Dette de nommage existante
+
+Trois conventions coexistent aujourd'hui sur le site :
+
+| Convention | Exemples | Quoi en faire |
+|---|---|---|
+| **Relume / Client-First** | `section_layout34`, `layout486_number` | ✅ La référence — tout le neuf s'écrit comme ça |
+| kebab custom | `lp-*`, `b2b-*` | ⚠️ Legacy : ne pas étendre, ne pas renommer en masse sans plan validé |
+| mixte | `preheader_*` | ⚠️ Idem |
+
+**Tout élément nouveau suit la convention Relume/Client-First**, sans exception. Le legacy se
+tolère là où il est, il ne se propage pas. Signaler, ne pas renommer de sa propre initiative :
+un renommage de classe se répercute sur toutes les pages qui l'utilisent.
 
 **Ne jamais mélanger deux systèmes de nommage** : pas de Lumos, pas de Tailwind, pas de BEM
 inventé pour l'occasion.

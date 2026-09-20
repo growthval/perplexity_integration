@@ -114,8 +114,12 @@ aujourd'hui** :
 | `get_variants` | N'existe pas : `data_component_tool > get_component` avec `options.includeVariants` |
 | « 46+ data tools » / anciennes listes d'outils | Jeu d'outils consolidé ; se fier à la découverte MCP |
 | commande CLI `webflow library` | Renommée `webflow devlink` (CLI 2.0, mai 2026) |
-| commande CLI `webflow cloud create` | Renommée `webflow cloud init` |
+| commande CLI `webflow cloud …` | **Namespace déprécié.** `webflow apps …` est le namespace canonique de Webflow Cloud, promu GA le 17/09/2026 ; `webflow cloud list` émet un avertissement de dépréciation. Confirme la surface exacte avec `webflow apps --help` plutôt que de recopier une liste de sous-commandes |
 | Node.js < 22.13 | Minimum 22.13.0 depuis la CLI 2.0 |
+| `deployUrl` dans `apps environments list` | Renommé **`publicUrl`** |
+| « max 5 bindings Cloudflare de chaque type » | Limite supprimée, affirmation périmée |
+| liste de frameworks Webflow Cloud sans `vite` ni `static` | Les deux existent dans la CLI |
+| plugin `webflow-skills` figé sur une vieille version | Les skills eux-mêmes ont porté des commandes CLI périmées jusqu'au 17/09/2026 : mettre à jour **avant** d'activer |
 | « le champ `canBranch` indique si le branching est disponible » | Faux : seul `list_branches` fait foi (403 `not_enterprise_plan_site` = indisponible) |
 | toute règle qui suppose un workflow en branche | Indisponible sur ce site (plan CMS) : remplacer par page dupliquée en `draft` + publication staging |
 | « on ne peut pas créer d'items CMS localisés » | **Faux aujourd'hui** : `create_collection_items` accepte `cmsLocaleIds` et `allCmsLocales: true` |
@@ -123,7 +127,6 @@ aujourd'hui** :
 | toute règle qui suppose Analyze ou Optimize | Ces add-ons ne sont pas actifs sur ce site |
 | toute règle qui impose un autre système de classes (Lumos, BEM, Tailwind, noms libres) | Ce site est en **Client-First** : conflit direct, à corriger |
 | toute règle qui pousse à fusionner les utilitaires empilés en une classe custom | Contraire à Client-First : l'empilement est voulu |
-| « on peut créer des items CMS localisés » | Faux : on peut seulement mettre à jour des items localisés existants |
 
 Cherche aussi les **contradictions entre mes propres fichiers** (deux systèmes de nommage de
 classes qui coexistent, deux conventions de structure, une règle locale qui interdit ce qu'une
