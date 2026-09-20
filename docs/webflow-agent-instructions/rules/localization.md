@@ -1,6 +1,14 @@
 # Règle — Localisation (Webflow Localize, locale secondaire EN)
 
-Ce site utilise l'add-on **Localize**. Locale primaire : `<FR>`. Locale secondaire : `<EN>`.
+Ce site utilise l'add-on **Localize**.
+
+- **Locale primaire : français (affichée `FR-FR` dans le Designer).** C'est la langue source.
+- **Locale secondaire : anglais.**
+
+⚠️ **Ne jamais deviner les identifiants.** Le code affiché dans le sélecteur du Designer n'est pas
+un identifiant utilisable par l'API. Lire `data_sites_tool > get_site` → champ `locales`, et en
+extraire, pour l'anglais, **l'`id` de locale** (pour `data_localization_tool`) **et le
+`cmsLocaleId`** (pour `data_cms_tool`) — voir la section suivante.
 
 ## Le modèle mental, avant tout
 

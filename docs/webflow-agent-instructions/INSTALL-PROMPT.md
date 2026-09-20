@@ -39,11 +39,23 @@ l'ordre ci-dessous et **ne saute aucune phase**. Tu as le MCP Webflow connecté.
   supérieur, ou un workspace payant — le plan CMS suffit).
 - **Add-ons : seul Localize est actif.** Analyze et Optimize ne le sont **pas** — ne propose
   aucun workflow qui en dépende (`data_analyze_tool` échouera, c'est normal).
-- **Le site est bilingue** : locale primaire `<FR>`, locale secondaire `<EN>` via Localize.
-  Une locale secondaire est une **surcouche de traduction** sur la même structure, pas une copie :
-  ne duplique jamais une page, un composant ou une collection pour l'anglais.
+- **Le site est bilingue** via Localize : locale primaire **français** (`FR-FR` dans le Designer),
+  locale secondaire **anglais**. Une locale secondaire est une **surcouche de traduction** sur la
+  même structure, pas une copie : ne duplique jamais une page, un composant ou une collection pour
+  l'anglais. Ne devine aucun identifiant de locale — lis-les dans `get_site`.
   Les contrôles de ton/formalité de la traduction IA relèvent de l'offre Localize avancée :
   teste avant d'en dépendre et dis-moi ce que tu obtiens.
+- **Le site** : « Service Limo Car » — chauffeur privé haut de gamme, mise à disposition longue
+  durée, événementiel et services VIP, Paris / France / international. Registre premium et sobre.
+- **Système de design : Client-First (Finsweet)**, avec des sections de la bibliothèque **Relume**.
+  Deux familles de classes coexistent et ne se traitent pas pareil : les **utilitaires**
+  Client-First en tirets (`padding-global`, `container-large`, `padding-section-large`,
+  `max-width-xlarge`, `text-align-center`, `margin-bottom`, `text-size-medium`,
+  `heading-style-h2`), partagés par tout le site et **à ne jamais modifier** pour un besoin
+  ponctuel ; et les **classes de composant** Relume en underscore (`section_header30`,
+  `header30_content`, `layout34_component`, `slider6_component`, `layout370_card-small`), propres
+  à leur bloc. Wrappers globaux : `page-wrapper` puis `main-wrapper`.
+  Détail complet dans `rules/design-system.md` du bundle.
 
 ## Phase 0 — Vérifier l'état réel, ne rien supposer
 
@@ -67,7 +79,9 @@ Avant toute écriture, construis une image réelle du site :
 - `data_style_tool > get_styles` — les classes existantes.
 - `data_variable_tool > get_variable_collections` puis `get_variables` — les tokens.
 - `data_component_tool > get_all_components` — les composants réutilisables.
-- `data_element_tool > get_all_elements` (depth 3-4) sur une page représentative — la structure maison.
+- `data_element_tool > get_all_elements` (depth 4-5) sur la page **Accueil**, puis sur deux autres
+  pages — la structure maison. Confirme que Client-First + Relume y est appliqué de façon
+  cohérente, et **signale tout écart** au lieu de généraliser ce que tu vois sur une seule page.
 - `data_localization_tool > list_components` — les composants localisables, et l'état actuel de la
   locale EN sur une page représentative (`get_page_content` avec le `localeId` secondaire) :
   qu'est-ce qui est déjà traduit, qu'est-ce qui ne l'est pas ?
@@ -107,6 +121,8 @@ aujourd'hui** :
 | « on ne peut pas créer d'items CMS localisés » | **Faux aujourd'hui** : `create_collection_items` accepte `cmsLocaleIds` et `allCmsLocales: true` |
 | toute règle qui crée une page, un composant ou une collection **dupliqués** pour l'anglais | Mauvais modèle : Localize est une surcouche sur la même structure |
 | toute règle qui suppose Analyze ou Optimize | Ces add-ons ne sont pas actifs sur ce site |
+| toute règle qui impose un autre système de classes (Lumos, BEM, Tailwind, noms libres) | Ce site est en **Client-First** : conflit direct, à corriger |
+| toute règle qui pousse à fusionner les utilitaires empilés en une classe custom | Contraire à Client-First : l'empilement est voulu |
 | « on peut créer des items CMS localisés » | Faux : on peut seulement mettre à jour des items localisés existants |
 
 Cherche aussi les **contradictions entre mes propres fichiers** (deux systèmes de nommage de

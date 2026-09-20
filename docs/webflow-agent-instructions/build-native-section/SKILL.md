@@ -16,7 +16,8 @@ responsive maîtrisé — et **aucun embed HTML**.
 3. `data_variable_tool > get_variables` : inventorier les tokens.
 4. `data_component_tool > get_all_components` : voir ce qui est réutilisable.
 5. `data_element_tool > get_all_elements` (depth 3-4) sur une page de référence
-   — par exemple `<page de référence du site>` — pour apprendre la structure maison.
+   — **la page Accueil** est la référence : elle porte les sections Relume de base
+   (`section_header30`, `section_layout34`) dans la structure Client-First du site.
 
 **Ne pas sauter cette étape.** C'est elle qui décide si le résultat ressemble au site ou à un template.
 
