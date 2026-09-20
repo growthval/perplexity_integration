@@ -70,6 +70,10 @@ l'ordre ci-dessous et **ne saute aucune phase**. Tu as le MCP Webflow connecté.
    **signale-le-moi avant d'agir** — c'est la source à jour qui gagne.
 4. Si un outil te manque pour une étape, appelle `get_more_tools` plutôt que de te rabattre sur
    un contournement.
+5. Si tu utilises la CLI Webflow : elle peut sortir en **code 1 sans aucun message** quand
+   `typescript` manque (dépendance tirée par `@module-federation/dts-plugin`). Symptôme
+   indébuggable de face. `npm install typescript` règle le problème — vérifie-le avant de
+   conclure à un bug de la CLI.
 
 ## Phase 1 — Inventorier le site
 
@@ -120,6 +124,7 @@ aujourd'hui** :
 | « max 5 bindings Cloudflare de chaque type » | Limite supprimée, affirmation périmée |
 | liste de frameworks Webflow Cloud sans `vite` ni `static` | Les deux existent dans la CLI |
 | plugin `webflow-skills` figé sur une vieille version | Les skills eux-mêmes ont porté des commandes CLI périmées jusqu'au 17/09/2026 : mettre à jour **avant** d'activer |
+| `webflow library share` / `library bundle` / `library log` / `devlink sync` | Constaté encore enseigné par les skills en **v1.0.9** : lire `webflow devlink import` / `devlink bundle` / `webflow log` / `devlink export`. Ne pas paraphraser les skills — poser une table de correction **au-dessus** d'eux dans le `CLAUDE.md` |
 | « le champ `canBranch` indique si le branching est disponible » | Faux : seul `list_branches` fait foi (403 `not_enterprise_plan_site` = indisponible) |
 | toute règle qui suppose un workflow en branche | Indisponible sur ce site (plan CMS) : remplacer par page dupliquée en `draft` + publication staging |
 | « on ne peut pas créer d'items CMS localisés » | **Faux aujourd'hui** : `create_collection_items` accepte `cmsLocaleIds` et `allCmsLocales: true` |
@@ -145,6 +150,11 @@ Lance `data_agent_instructions_tool > generate_instruction` pour, dans cet ordre
 3. `asset-guidelines`
 4. `cms-guidelines` — celui-ci exige une collection CMS en source primaire : demande-moi laquelle,
    ou propose la plus structurante après avoir listé les collections.
+   ⚠️ **Piège connu** : `cms-guidelines` renvoie un 400 si `context_sources` contient une clé
+   `additional`, même vide. La doc de l'outil est explicite — les CMS guidelines exigent une
+   source primaire `cms-collection` **et aucune source additionnelle**. En cas de 400, réessaie
+   avec un `context_sources` ne contenant **que** `primary`, sans clé `additional` du tout.
+   Si ça échoue encore, signale-le et passe à la suite : ce brouillon peut s'écrire à la main.
 
 C'est **asynchrone** : premier appel → `taskId`, puis rappels avec `task_id` jusqu'à `finished`
 ou `failed`, puis lecture du `resourceUri`. Les résultats sont des **brouillons** :
