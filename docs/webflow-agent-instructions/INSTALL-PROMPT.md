@@ -18,6 +18,9 @@ https://raw.githubusercontent.com/growthval/perplexity_integration/claude/busy-f
 Récupère ce fichier (fetch HTTP, ou `curl -s <url>`) et garde-le sous la main : il contient les
 5 instructions à créer, chacune avec son `kind` et son `path`. Si la récupération échoue, dis-le
 et arrête-toi — ne reconstitue pas le contenu de mémoire.
+> ⚠️ `raw.githubusercontent.com` met les URLs de **branche** en cache environ 5 minutes. Si le kit
+> vient d'être modifié, remplace le nom de branche par un **SHA de commit** dans l'URL : cette
+> forme-là est immuable et servie immédiatement.
 
 ---
 

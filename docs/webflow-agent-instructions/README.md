@@ -40,8 +40,16 @@ https://raw.githubusercontent.com/growthval/perplexity_integration/claude/busy-f
 https://raw.githubusercontent.com/growthval/perplexity_integration/claude/busy-franklin-i7zvly/docs/webflow-agent-instructions/BUNDLE.md
 ```
 
-Pour figer une version précise, remplace le nom de branche par un SHA de commit — l'URL devient
-immuable.
+⚠️ **Le cache.** `raw.githubusercontent.com` met les URLs de branche en cache environ 5 minutes.
+Si tu modifies une règle et relances l'agent dans la foulée, il lira l'ancienne version. Parade :
+remplace le nom de branche par un **SHA de commit** — cette forme est immuable et servie
+immédiatement, et elle fige aussi la version que l'agent installe.
+
+```
+https://raw.githubusercontent.com/growthval/perplexity_integration/<sha>/docs/webflow-agent-instructions/BUNDLE.md
+```
+
+(`git rev-parse HEAD` pour obtenir le SHA.)
 
 **2. En connectant le dépôt à ton agent.** Claude Code sur le web : ajoute
 `growthval/perplexity_integration` aux sources de la session. Claude Code en local ou Cursor :
