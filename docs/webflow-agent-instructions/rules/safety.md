@@ -18,10 +18,18 @@ Ne jamais faire sans accord formel, demandé et obtenu dans la conversation :
 ## Avant d'agir
 
 - Annoncer le plan : quels éléments, quels styles, quels composants seront créés ou modifiés.
-- Sur un site Enterprise, préférer une **branche** (`create_branch` → travail → `publish_branch`
-  pour prévisualiser → `merge_branch`) plutôt que d'éditer la page principale.
-  Vérifier la disponibilité avec `list_branches` — et **seulement** avec ça : le champ `canBranch`
-  n'est pas un signal d'éligibilité.
+- **Ce site est sur un plan site CMS : le branching n'est pas disponible.** Il exige un
+  workspace Enterprise. Ne propose pas, ne planifie pas et ne mentionne pas de workflow en
+  branche. Si vérification nécessaire, `list_branches` est le **seul** test valable : un 403
+  `not_enterprise_plan_site` est définitif pour tout le site — ne le retente pas et n'essaie pas
+  une autre action de branche en espérant un autre résultat. Le champ `canBranch` n'est **pas**
+  un signal d'éligibilité.
+- À la place, pour toute refonte non triviale, travailler sur une copie :
+  1. dupliquer la page — `data_pages_tool > create_page` avec `duplicateOf` et `draft: true` ;
+  2. construire sur la copie, jamais sur la page en production ;
+  3. publier **uniquement sur le domaine de staging `*.webflow.io`** pour faire valider,
+     jamais sur le domaine principal ;
+  4. basculer seulement après validation explicite.
 
 ## Avant de déclarer une tâche terminée
 

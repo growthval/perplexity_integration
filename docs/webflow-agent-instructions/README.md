@@ -27,6 +27,31 @@ De quoi faire construire à un agent IA (Claude, Cursor, Codex…) des pages Web
 Le prompt est conçu pour **s'arrêter et demander** avant chaque écriture significative, et pour
 ne rien publier.
 
+## Accès sans rien copier dans ton projet
+
+Le dépôt est **public** : ton agent peut lire ces fichiers directement, tu n'as aucun fichier à
+importer. Trois voies, de la plus simple à la plus intégrée.
+
+**1. Par URL (le plus simple, marche partout).** Le prompt contient déjà l'URL du bundle.
+Fichiers bruts :
+
+```
+https://raw.githubusercontent.com/growthval/perplexity_integration/claude/busy-franklin-i7zvly/docs/webflow-agent-instructions/INSTALL-PROMPT.md
+https://raw.githubusercontent.com/growthval/perplexity_integration/claude/busy-franklin-i7zvly/docs/webflow-agent-instructions/BUNDLE.md
+```
+
+Pour figer une version précise, remplace le nom de branche par un SHA de commit — l'URL devient
+immuable.
+
+**2. En connectant le dépôt à ton agent.** Claude Code sur le web : ajoute
+`growthval/perplexity_integration` aux sources de la session. Claude Code en local ou Cursor :
+`git clone` **à côté** de ton projet, pas dedans, et pointe l'agent dessus.
+
+**3. La vraie réponse à long terme : ne plus avoir besoin du dépôt du tout.** Une fois la
+Phase 4 passée, les instructions vivent **sur le site Webflow**. Le serveur MCP les sert
+automatiquement à n'importe quel agent connecté — Claude, Cursor, Codex — sans aucun fichier
+nulle part. Ce dépôt ne sert plus qu'à la maintenance du kit.
+
 ## Installation manuelle (sans agent)
 
 Site Webflow → section *Instructions* → créer une Rule ou un Skill → coller le contenu du fichier

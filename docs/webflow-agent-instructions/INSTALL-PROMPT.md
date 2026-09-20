@@ -1,20 +1,50 @@
 # Prompt d'installation — à coller chez ton agent
 
 > **Prérequis** : l'agent doit avoir le **MCP Webflow connecté et autorisé** sur le bon workspace
-> (`https://mcp.webflow.com/mcp`), et avoir accès au fichier `BUNDLE.md` (même dossier).
-> Si `BUNDLE.md` n'est pas accessible à l'agent, colle son contenu à la suite du prompt.
+> (`https://mcp.webflow.com/mcp`).
+>
+> Le contenu des instructions vit dans un dépôt public — **rien à copier dans ton projet**.
+> Le prompt ci-dessous donne l'URL à l'agent. Si ton agent ne sait pas récupérer d'URL,
+> ouvre `BUNDLE.md` et colle son contenu à la suite du prompt.
+
+---
+
+Le contenu des instructions à installer se trouve ici, en accès public :
+
+```
+https://raw.githubusercontent.com/growthval/perplexity_integration/claude/busy-franklin-i7zvly/docs/webflow-agent-instructions/BUNDLE.md
+```
+
+Récupère ce fichier (fetch HTTP, ou `curl -s <url>`) et garde-le sous la main : il contient les
+5 instructions à créer, chacune avec son `kind` et son `path`. Si la récupération échoue, dis-le
+et arrête-toi — ne reconstitue pas le contenu de mémoire.
 
 ---
 
 Tu vas installer et mettre à jour la configuration « agent » de mon site Webflow. Travaille dans
 l'ordre ci-dessous et **ne saute aucune phase**. Tu as le MCP Webflow connecté.
 
+## Contexte du site — à respecter tout du long
+
+- **Plan du site : CMS.** (C'est le plan *site*, pas le plan *workspace*.)
+- **Le branching n'est donc pas disponible** : il gate sur un workspace Enterprise. Ne propose
+  aucun workflow en branche. Pour itérer sans risque : dupliquer la page
+  (`create_page` avec `duplicateOf` et `draft: true`), travailler sur la copie, publier
+  **uniquement sur le domaine de staging `*.webflow.io`**, basculer après validation.
+- Ce que le plan CMS permet et qui est utile ici : le CMS et ses collections, le custom code de
+  site et de page, et la **publication de code components** (elle exige un plan site CMS ou
+  supérieur, ou un workspace payant — le plan CMS suffit).
+- Analyze, Optimize et Localize sont des **add-ons séparés**. Ne présume pas qu'ils sont actifs :
+  si une action en dépend, teste d'abord et dis-moi ce que tu obtiens.
+
 ## Phase 0 — Vérifier l'état réel, ne rien supposer
 
 1. Appelle `webflow_guide_tool` et **note la version du serveur MCP** annoncée. Tout ce qui suit
    doit être vérifié contre cette version, pas contre ta mémoire ni contre des articles de blog.
 2. Liste mes sites (`data_sites_tool`) et demande-moi lequel traiter si le choix est ambigu.
-   Ne devine jamais un `site_id`.
+   Ne devine jamais un `site_id`. Relève au passage les locales du site : la locale primaire est
+   en lecture seule pour `data_localization_tool`, et **on ne peut pas créer d'items CMS
+   localisés** — seulement mettre à jour ceux qui existent.
 3. Va lire la page <https://developers.webflow.com/home/changelog> et repère **toute entrée
    postérieure au 20 septembre 2026**. Si quelque chose contredit les instructions ci-dessous,
    **signale-le-moi avant d'agir** — c'est la source à jour qui gagne.
@@ -62,6 +92,7 @@ aujourd'hui** :
 | commande CLI `webflow cloud create` | Renommée `webflow cloud init` |
 | Node.js < 22.13 | Minimum 22.13.0 depuis la CLI 2.0 |
 | « le champ `canBranch` indique si le branching est disponible » | Faux : seul `list_branches` fait foi (403 `not_enterprise_plan_site` = indisponible) |
+| toute règle qui suppose un workflow en branche | Indisponible sur ce site (plan CMS) : remplacer par page dupliquée en `draft` + publication staging |
 | « on peut créer des items CMS localisés » | Faux : on peut seulement mettre à jour des items localisés existants |
 
 Cherche aussi les **contradictions entre mes propres fichiers** (deux systèmes de nommage de
@@ -89,7 +120,7 @@ Ne les passe pas en non-brouillon sans mon accord.
 
 ## Phase 4 — Installer les règles et le skill
 
-Depuis `BUNDLE.md`, crée les instructions suivantes avec
+Depuis le bundle récupéré en tête de prompt, crée les instructions suivantes avec
 `data_agent_instructions_tool > create_instruction` :
 
 | `kind` | `path` |
@@ -132,7 +163,8 @@ Vérifie que l'installation fonctionne, sans rien publier :
 ## Contraintes valables sur toute la mission
 
 - **Ne publie rien**, ne supprime rien, ne modifie aucun style global ni composant partagé sans
-  mon accord explicite.
+  mon accord explicite. Si une publication est validée, elle va **d'abord sur `*.webflow.io`**.
+- **Aucun workflow en branche** : le plan du site ne le permet pas (voir Contexte du site).
 - Annonce ton plan avant chaque phase d'écriture.
 - À la fin, liste tout ce qui a été créé ou modifié — sur le site **et** dans le projet.
 - Quand tu n'es pas sûr, dis-le au lieu de deviner.

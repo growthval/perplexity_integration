@@ -385,6 +385,11 @@ Et deux fichiers pour l'installation :
 - **`BUNDLE.md`** — les 5 instructions en un seul document avec leurs `kind` et `path`,
   pour que l'agent lise tout d'un coup. Régénéré par `make-bundle.py`.
 
+Le dépôt étant public, l'agent peut lire ces fichiers par URL, **sans rien importer dans votre
+projet** — le prompt contient déjà l'URL du bundle. Et une fois la phase d'installation passée,
+les instructions vivent sur le site Webflow : le serveur MCP les sert à n'importe quel agent
+connecté, sans fichier nulle part.
+
 ---
 
 ## 7. Panorama des nouveautés IA Webflow (2025 → sept. 2026)
